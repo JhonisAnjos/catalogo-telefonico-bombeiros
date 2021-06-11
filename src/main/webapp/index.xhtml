@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="WEB-INF/template/layout.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputLabel>
+		CATÁLOGO TELEFÔNICO
+	</p:outputLabel>
+	</ui:define>
+		
+	<ui:define name="conteudo">
+		<h:form>
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="Nova" icon="fa fa-plus"
+						actionListener="#{mainPageBean.prepararInsercao}"
+						oncomplete="PF('contatoDialogWidgetVar').show()"
+						update="contatoDialog" process="@this">
+						<p:resetInput target="contatoDialog" />
+					</p:commandButton>
+					<p:spacer />
+					<p:commandButton title="Editar" icon="fa fa-edit" />
+					<p:spacer />
+					<p:commandButton title="Exportar para o Excel"
+						icon="fa fa-file-excel-o" />
+				</f:facet>
+			</p:toolbar>
+			<p:dataTable id="contatosDataTable" value="#{mainPageBean.contatos}"
+				var="contato" emptyMessage="Nenhuma informação a ser exibida"
+				paginator="true" rows="10" paginatorPosition="bottom">
+				<p:column headerText="Nome" sortBy="#{contato.nome}">
+					<h:outputText value="#{contato.nome}" />
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<h:outputText value="#{contato.telefone}" />
+				</p:column>
+
+				<p:column headerText="Celular">
+					<h:outputText value="#{contato.celular}" />
+				</p:column>
+
+				<p:column headerText="Grau Hierárquico">
+					<h:outputText value="#{contato.grauHierarquico.descricao}" />
+				</p:column>
+			</p:dataTable>
+			<p:dialog id="contatoDialog" header="Contato"
+				widgetVar="contatoDialogWidgetVar" modal="true" resizable="false"
+				closeOnEscape="true">
+				<p:messages id="contatoMessages" />
+
+				<p:defaultCommand target="salvarCommandButton" scope="contatoDialog" />
+				
+				<p:fieldset legend="Dados pessoais">
+				
+				<h:panelGrid id="contatoPanelGrid" columns="2"
+					rendered="#{mainPageBean.contato ne null}">
+					<p:outputLabel value="Nome: " for="nome"/>
+					<p:inputText id="nome" size="60" maxlength="100"
+						value="#{mainPageBean.contato.nome}" />
+
+					<p:outputLabel value="Telefone: " for="telefone" />
+					<p:inputMask id="telefone" size="60" mask="(99)9999-9999"
+						value="#{mainPageBean.contato.telefone}" />
+
+					<p:outputLabel value="Celular: " for="celular" />
+					<p:inputMask id="celular" size="60" mask="(99)99999-9999"
+						value="#{mainPageBean.contato.celular}" />
+
+					<p:outputLabel value="Grau hierárquico: " for="gh" />
+					<p:selectOneMenu id="gh"
+						value="#{mainPageBean.contato.grauHierarquico}">
+						<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+						<f:selectItems value="#{mainPageBean.grausHierarquicos}"
+							var="grau" itemLabel="#{grau.descricao}" itemValue="#{grau}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				</p:fieldset>
+				<p:spacer/>
+				<p:fieldset legend="Endereço">
+				<h:panelGrid id="enderecoPanelGrid" columns="4"
+					rendered="#{mainPageBean.contato ne null}">
+					<p:outputLabel value="CEP: " for="cep"/>
+					<p:inputMask id="cep" value="#{mainPageBean.contato.endereco.cep}" mask="99.999-999"/>
+
+					<p:outputLabel value="Logradouro: " for="logradouro" />
+					<p:inputText id="logradouro"
+						value="#{mainPageBean.contato.endereco.logradouro}" />
+
+					<p:outputLabel value="Número: " for="numero" />
+					<p:inputText type="number" id="numero"
+						value="#{mainPageBean.contato.endereco.numero}" />
+
+					<p:outputLabel value="Complemento: " for="complemento" />
+					<p:inputText id="complemento"
+						value="#{mainPageBean.contato.endereco.complemento}"
+						maxlength="30" />
+
+					<p:outputLabel value="Bairro: " for="bairro" />
+					<p:inputText id="bairro"
+						value="#{mainPageBean.contato.endereco.bairro}" maxlength="30" />
+
+					<p:outputLabel value="Cidade: " for="cidade" />
+					<p:inputText id="cidade"
+						value="#{mainPageBean.contato.endereco.cidade}" maxlength="30" />
+
+					<p:outputLabel value="Estado: " for="estado" />
+					<p:selectOneMenu id="estado"
+						value="#{mainPageBean.contato.endereco.estado}">
+						<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+						<f:selectItems value="#{mainPageBean.estados}" var="estado"
+							itemLabel="#{estado.descricao}" itemValue="#{estado}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				</p:fieldset>
+				<br/>				
+				<p:commandButton id="salvarCommandButton" value="Salvar"
+						actionListener="#{mainPageBean.salvar}"
+						update="contatoPanelGrid contatoMessages"
+						oncomplete="if (!args.validationFailed) PF('contatoDialogWidgetVar').hide()"
+						process="contatoDialog" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
