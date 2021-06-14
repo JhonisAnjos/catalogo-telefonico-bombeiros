@@ -168,7 +168,7 @@
 				<div style="position: relative; float: right; padding-bottom: 20px">
 					<p:commandButton id="salvarCommandButton" value="Salvar"
 						actionListener="#{mainPageBean.save}"
-						update="contatoPanelGrid enderecoPanelGrid"
+						update="contatoPanelGrid enderecoPanelGrid frm:toolbar"
 						oncomplete="if (!args.validationFailed) PF('contatoDialogWidgetVar').hide()"
 						process="contatoDialog" />
 				</div>
