@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import dev.jhonisanjos.enums.GrauHierarquicoEnum;
 
@@ -27,15 +28,18 @@ public class Contato implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@Column(nullable = false, length = 100)
 	private String nome;
 
-	@Column(nullable = true, length = 15)
+	@NotNull
+	@Column(nullable = false, length = 15)
 	private String celular;
-
+	
 	@Column(nullable = true, length = 14)
 	private String telefone;
 
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private GrauHierarquicoEnum grauHierarquico;
 

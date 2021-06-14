@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
 import dev.jhonisanjos.enums.EstadoEnum;
 
 @Entity
@@ -23,24 +23,29 @@ public class Endereco implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
 	@Column(nullable = false, length = 10)
 	private String cep;
 	
+	@NotNull
 	@Column(nullable = false)
 	private String logradouro;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Integer numero;
 	
 	@Column(nullable = true, length = 30)
 	private String complemento;
 	
-	@Column(nullable = true, length = 30)
+	@NotNull
+	@Column(nullable = false, length = 30)
 	private String bairro;
 	
+	@NotNull
 	@Column(nullable = true, length = 30)
 	private String cidade;
 	
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private EstadoEnum estado;
 

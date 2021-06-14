@@ -10,15 +10,14 @@
 	<title>Catálogo telefônico</title>
 
 	<h:outputStylesheet library="style" name="estilo.css" />
-	
+
 	<ui:insert name="head" />
 </h:head>
 
 <h:body>
 	<header>
-		<i class="pi pi-calendar" ></i> 
-		JHONIS ANJOS
-	 </header>
+		<i class="pi pi-calendar"></i> JHONIS ANJOS
+	</header>
 	<div id="titulo">
 		<h2>
 			<ui:insert name="titulo" />
@@ -30,6 +29,15 @@
 	</div>
 
 	<footer> Desafio técnico "JSF e JPA" </footer>
+	<h:form>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Não" icon="fa fa-remove"
+				styleClass="ui-confirmdialog-no ui-button-flat" />
+
+			<p:commandButton value="Sim" icon="fa fa-check"
+				styleClass="ui-confirmdialog-yes" />
+		</p:confirmDialog>
+	</h:form>
 </h:body>
 
 </html>

@@ -6,10 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import dev.jhonisanjos.config.Transacional;
 import dev.jhonisanjos.entities.Contato;
 
-@Transacional
 public class ContatoRepository implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -21,8 +19,13 @@ public class ContatoRepository implements Serializable{
 		return this.manager.merge(contato);
 	}
 	
-	public void remove(Contato contatoRepository){
-		this.manager.remove(contatoRepository);
+	public void remove(Contato contato){
+		contato = this.findById(contato.getId());
+		this.manager.remove(contato);
+	}
+	
+	public Contato findById(Long id) {
+		return this.manager.find(Contato.class, id);
 	}
 	
 	public List<Contato> findAll(){
